@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lost_and_found_app/screens/HomeScreen.dart';
 import 'package:lost_and_found_app/screens/createAccount.dart';
+import 'package:lost_and_found_app/screens/forgotPassword.dart';
 import 'package:lost_and_found_app/widgets/customTextEntry.dart';
 import 'package:lost_and_found_app/widgets/long_button.dart';
 
@@ -49,12 +51,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Text(
-                          " Forgot Password?",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff7e3bc2),
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    ForgotPasswordScreen(), // Replace 'NextPage' with your actual next page widget
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            " Forgot Password?",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff7e3bc2),
+                            ),
                           ),
                         ),
                       ],
@@ -96,7 +109,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 child: CustomLongButton(
                   text: "Login",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            HomeScreen(), // Replace 'NextPage' with your actual next page widget
+                      ),
+                    );
+                  },
                   textColor: Colors.white,
                   backgroundColor: Color(0xff7e3bc2),
                 ),

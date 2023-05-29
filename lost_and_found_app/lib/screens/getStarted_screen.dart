@@ -51,7 +51,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
             CustomLongButton(
               text: "Ceate Account",
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
@@ -66,7 +66,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
             CustomLongButton(
               text: "Login",
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:lost_and_found_app/screens/HomeScreen.dart';
+import 'package:lost_and_found_app/screens/loginScreen.dart';
 
 import '../widgets/customTextEntry.dart';
 import '../widgets/long_button.dart';
@@ -68,15 +70,52 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(bottom: 20),
-            width: double.infinity,
-            child: CustomLongButton(
-              text: "Create Account",
-              onPressed: () {},
-              textColor: Colors.white,
-              backgroundColor: Color(0xff7e3bc2),
-            ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Already have an Account?"),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              LoginScreen(), // Replace 'NextPage' with your actual next page widget
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "  Login!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff7e3bc2),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.only(bottom: 20),
+                width: double.infinity,
+                child: CustomLongButton(
+                  text: "Login",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            HomeScreen(), // Replace 'NextPage' with your actual next page widget
+                      ),
+                    );
+                  },
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xff7e3bc2),
+                ),
+              ),
+            ],
           ),
         ],
       ),
