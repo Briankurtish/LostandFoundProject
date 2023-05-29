@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:lost_and_found_app/screens/createAccount.dart';
 
 import '../widgets/customButtonIcon.dart';
 import '../widgets/customTextEntry.dart';
@@ -48,7 +49,15 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
             ),
             CustomLongButton(
               text: "Ceate Account",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        CreateAccountScreen(), // Replace 'NextPage' with your actual next page widget
+                  ),
+                );
+              },
               textColor: Colors.white,
               backgroundColor: Color(0xff7e3bc2),
             ),
