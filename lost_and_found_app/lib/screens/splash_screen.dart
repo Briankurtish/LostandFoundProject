@@ -49,10 +49,17 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
               height: 80,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xff228cdb)),
-                ),
+              child: Column(
+                children: const [
+                  Text("Finding your lost items ...."),
+                  SizedBox(height: 10),
+                  Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Color(0xff228cdb)),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

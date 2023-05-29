@@ -41,22 +41,27 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     SizedBox(height: 50),
                     CustomTextEntry(
                       placeholder: 'Username',
+                      icon: Icons.supervised_user_circle,
                     ),
                     SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Email',
+                      icon: Icons.email,
                     ),
                     SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Phone Number',
+                      icon: Icons.phone,
                     ),
                     SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Password',
+                      icon: Icons.lock,
                     ),
                     SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Confirm Password',
+                      icon: Icons.lock,
                     ),
                   ],
                 ),
@@ -67,7 +72,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             padding: EdgeInsets.only(bottom: 20),
             width: double.infinity,
             child: CustomLongButton(
-              text: "Next",
+              text: "Create Account",
               onPressed: () {},
               textColor: Colors.white,
               backgroundColor: Color(0xff7e3bc2),
