@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lost_and_found_app">
    <application
-        android:label="lost_and_found_app"
+        android:label="Found it"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

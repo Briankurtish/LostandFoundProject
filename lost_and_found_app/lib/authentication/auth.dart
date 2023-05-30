@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_and_found_app/authentication/messages.dart';
+import 'package:lost_and_found_app/provider/authProvider.dart';
 import 'package:lost_and_found_app/screens/HomeScreen.dart';
+import 'package:provider/provider.dart';
 
 class Auth {
   // creating new instance of firebase auth
@@ -27,6 +29,10 @@ class Auth {
         'email': email,
         'phoneNumber': phoneNumber,
       });
+
+      // Step 3: Fetch and store the username from Firestore
+      await Provider.of<AuthProvider>(context, listen: false)
+          .fetchUsername(user!.uid);
 
       // Registration successful
       print('User registered successfully!');

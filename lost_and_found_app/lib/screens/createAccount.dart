@@ -1,31 +1,45 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:lost_and_found_app/screens/HomeScreen.dart';
-import 'package:lost_and_found_app/screens/loginScreen.dart';
 import 'package:lost_and_found_app/authentication/auth.dart';
 
-import '../widgets/customTextEntry.dart';
-import '../widgets/long_button.dart';
+import 'package:lost_and_found_app/screens/loginScreen.dart';
+
+import 'package:lost_and_found_app/widgets/customTextEntry.dart';
+
+import 'package:lost_and_found_app/widgets/long_button.dart';
+import 'package:lost_and_found_app/widgets/passwordEntry.dart';
 
 class CreateAccountScreen extends StatefulWidget {
-  const CreateAccountScreen({super.key});
-
   @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+  _CreateAccountScreenState createState() => _CreateAccountScreenState();
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
-      GlobalKey<ScaffoldMessengerState>();
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  bool _isLoading = false;
+
+  Future<void> _handleCreateAccount() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String username = usernameController.text;
+    String email = emailController.text;
+    String phone = phoneController.text;
+    String password = passwordController.text;
+
+    // Register the user with Firebase
+    await Auth().registerWithEmailAndPassword(
+        context, username, email, phone, password);
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +85,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       controller: phoneController,
                     ),
                     const SizedBox(height: 20.0),
-                    CustomTextEntry(
+                    PasswordTextEntry(
                       placeholder: 'Password',
                       icon: Icons.lock,
                       controller: passwordController,
                     ),
                     const SizedBox(height: 20.0),
-                    CustomTextEntry(
+                    PasswordTextEntry(
                       placeholder: 'Confirm Password',
                       icon: Icons.lock,
-                      controller: confirmpasswordController,
+                      controller: confirmPasswordController,
                     ),
                   ],
                 ),
@@ -98,8 +112,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              LoginScreen(), // Replace 'NextPage' with your actual next page widget
+                          builder: (BuildContext context) => LoginScreen(),
                         ),
                       );
                     },
@@ -115,20 +128,32 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                padding: EdgeInsets.only(bottom: 20),
+                padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
                 width: double.infinity,
-                child: CustomLongButton(
-                  text: "Create Account",
-                  onPressed: () {
-                    Auth().registerWithEmailAndPassword(
-                        context,
-                        usernameController.text,
-                        emailController.text,
-                        phoneController.text,
-                        passwordController.text);
-                  },
-                  textColor: Colors.white,
-                  backgroundColor: Color(0xff7e3bc2),
+                child: ElevatedButton(
+                  onPressed: _isLoading ? null : _handleCreateAccount,
+                  style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      backgroundColor: Color(
+                          0xff7e3bc2) // Customize the button's background color
+                      ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          color: Color(0xff7e3bc2),
+                          strokeWidth: 5,
+                        )
+                      : Text(
+                          'Create Account',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors
+                                .white, // Customize the button's text color
+                          ),
+                        ),
                 ),
               ),
             ],
