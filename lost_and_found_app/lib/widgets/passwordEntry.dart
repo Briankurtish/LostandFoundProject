@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class CustomTextEntry extends StatefulWidget {
+class PasswordTextEntry extends StatefulWidget {
   final String placeholder;
   final IconData icon;
   final TextEditingController controller;
 
-  const CustomTextEntry({
+  const PasswordTextEntry({
     required this.placeholder,
     required this.icon,
     required this.controller,
   });
 
   @override
-  State<CustomTextEntry> createState() => _CustomTextEntryState();
+  State<PasswordTextEntry> createState() => _PasswordTextEntryState();
 }
 
-class _CustomTextEntryState extends State<CustomTextEntry> {
+class _PasswordTextEntryState extends State<PasswordTextEntry> {
   bool _isFocused = false;
 
   @override
@@ -32,6 +32,7 @@ class _CustomTextEntryState extends State<CustomTextEntry> {
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: TextField(
         controller: widget.controller,
+        obscureText: true,
         decoration: InputDecoration(
           prefixIcon: Icon(
             widget.icon,

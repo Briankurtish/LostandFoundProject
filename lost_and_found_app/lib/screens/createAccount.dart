@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:lost_and_found_app/screens/HomeScreen.dart';
 import 'package:lost_and_found_app/screens/loginScreen.dart';
+import 'package:lost_and_found_app/authentication/auth.dart';
 
 import '../widgets/customTextEntry.dart';
 import '../widgets/long_button.dart';
@@ -15,6 +17,16 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,42 +40,47 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Getting Started!",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "Looks like you are new to us! Create an\naccount for a complete experience",
                       style: TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     CustomTextEntry(
                       placeholder: 'Username',
                       icon: Icons.supervised_user_circle,
+                      controller: usernameController,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Email',
                       icon: Icons.email,
+                      controller: emailController,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Phone Number',
                       icon: Icons.phone,
+                      controller: phoneController,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Password',
                       icon: Icons.lock,
+                      controller: passwordController,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     CustomTextEntry(
                       placeholder: 'Confirm Password',
                       icon: Icons.lock,
+                      controller: confirmpasswordController,
                     ),
                   ],
                 ),
@@ -101,15 +118,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 padding: EdgeInsets.only(bottom: 20),
                 width: double.infinity,
                 child: CustomLongButton(
-                  text: "Login",
+                  text: "Create Account",
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            HomeScreen(), // Replace 'NextPage' with your actual next page widget
-                      ),
-                    );
+                    Auth().registerWithEmailAndPassword(
+                        context,
+                        usernameController.text,
+                        emailController.text,
+                        phoneController.text,
+                        passwordController.text);
                   },
                   textColor: Colors.white,
                   backgroundColor: Color(0xff7e3bc2),

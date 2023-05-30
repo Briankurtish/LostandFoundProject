@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "16731822148",
+    "project_id": "foundit-7afc4",
+    "storage_bucket": "foundit-7afc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16731822148:android:0dc371bb2fef0fe59a0411",
+        "android_client_info": {
+          "package_name": "com.example.lost_and_found_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbckhWaa-bxng7eaWZN4YDVvT6k-eErKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

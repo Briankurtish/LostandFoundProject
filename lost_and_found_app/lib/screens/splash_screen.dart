@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:lost_and_found_app/screens/HomeScreen.dart';
 
 import 'getStarted_screen.dart';
 
@@ -14,18 +16,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     super.initState();
     Timer(Duration(seconds: 10), () {
+      navigateToNextScreen();
+    });
+  }
+
+  void navigateToNextScreen() async {
+    if (_auth.currentUser != null) {
+      // User is already authenticated, navigate to the home screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      // User not authenticated, navigate to the login screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) =>
-              GetStartedScreen(), // Replace 'NextPage' with your actual next page widget
+          builder: (context) => GetStartedScreen(),
         ),
       );
-    });
+    }
   }
 
   @override

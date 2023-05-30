@@ -13,6 +13,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,22 +28,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Forgot Password!",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "Enter your email and a verification link will be\nsent to you so as to reset your password.",
                       style: TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     CustomTextEntry(
                       placeholder: 'Email',
                       icon: Icons.email,
+                      controller: emailController,
                     ),
                     SizedBox(height: 100.0),
                   ],
