@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_and_found_app/authentication/messages.dart';
 import 'package:lost_and_found_app/provider/authProvider.dart';
-import 'package:lost_and_found_app/screens/HomeScreen.dart';
+import 'package:lost_and_found_app/screens/Home/HomeScreen.dart';
 import 'package:provider/provider.dart';
 
 class Auth {

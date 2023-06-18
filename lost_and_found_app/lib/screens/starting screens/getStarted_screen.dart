@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:lost_and_found_app/screens/createAccount.dart';
-import 'package:lost_and_found_app/screens/loginScreen.dart';
+import 'package:lost_and_found_app/screens/auth_screens/createAccount.dart';
+import 'package:lost_and_found_app/screens/auth_screens/loginScreen.dart';
 
-import '../widgets/customButtonIcon.dart';
-import '../widgets/customTextEntry.dart';
-import '../widgets/lineDivider_widget.dart';
-import '../widgets/long_button.dart';
+import '../../widgets/customButtonIcon.dart';
+import '../../widgets/customTextEntry.dart';
+import '../../widgets/lineDivider_widget.dart';
+import '../../widgets/long_button.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({super.key});

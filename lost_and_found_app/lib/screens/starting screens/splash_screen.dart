@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:lost_and_found_app/screens/HomeScreen.dart';
+import 'package:lost_and_found_app/screens/Home/HomeScreen.dart';
 
+import '../bottom_nav_screen.dart';
 import 'getStarted_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // User is already authenticated, navigate to the home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
       );
     } else {
       // User not authenticated, navigate to the login screen
