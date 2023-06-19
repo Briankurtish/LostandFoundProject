@@ -1,25 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostModel {
+  // Username of the post creator
   final String? itemName;
-  final String? location;
   final String? description;
-
-  PostModel(this.itemName, this.location, this.description);
+  final String? location;
+  final String? username;
 
   factory PostModel.fromSnapshot(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return PostModel(
       snapshot['itemName'],
-      snapshot['location'],
       snapshot['description'],
+      snapshot['location'],
+      snapshot['username'],
     );
   }
 
+  PostModel(this.itemName, this.description, this.location, this.username);
+
   Map<String, dynamic> toJson() => {
         'itemName': itemName,
-        'location': location,
         'description': description,
+        'location': location,
+        'username': username,
       };
 }

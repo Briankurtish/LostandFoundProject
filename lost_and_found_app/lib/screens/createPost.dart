@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_and_found_app/remote_data_source/firestore_helper.dart';
 
@@ -23,6 +24,24 @@ class _CreatePostPageState extends State<CreatePostPage> {
     locationController.dispose();
     descriptionController.dispose();
     super.dispose();
+  }
+
+  Future<String?> getCurrentUsername() async {
+    // Retrieve the currently logged-in user
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // Fetch the user document from Firestore
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      // Extract the username from the user document
+      return snapshot['username'];
+    }
+
+    return null;
   }
 
   Widget build(BuildContext context) {
@@ -106,12 +125,20 @@ class _CreatePostPageState extends State<CreatePostPage> {
             Center(
               child: CustomLongButton(
                 text: "Upload Post",
-                onPressed: () {
-                  FirestoreHelper.upload(PostModel(
-                    itemNameController.text,
-                    locationController.text,
-                    descriptionController.text,
-                  ));
+                onPressed: () async {
+                  String? username = await getCurrentUsername();
+
+                  if (username != null) {
+                    PostModel post = PostModel(
+                      itemNameController.text,
+                      descriptionController.text,
+                      locationController.text,
+                      username,
+                    );
+                    FirestoreHelper.upload(post);
+                  } else {
+                    print('Failed to retrieve username.');
+                  }
                 },
               ),
             ),
@@ -149,8 +176,15 @@ class _CreatePostPageState extends State<CreatePostPage> {
                                 shape: BoxShape.circle,
                               ),
                             ),
-                            title: Text("${singlePost.itemName}"),
-                            subtitle: Text("${singlePost.location}"),
+                            title: Text("${singlePost.username}"),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Item Name: ${singlePost.itemName}"),
+                                Text("Location: ${singlePost.location}"),
+                                Text("Description: ${singlePost.description}"),
+                              ],
+                            ),
                           ),
                         );
                       },

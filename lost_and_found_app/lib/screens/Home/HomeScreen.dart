@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           final singlePost = postData[index];
                           return FeedWidget(
-                            username: _username,
+                            username: "${singlePost.username}",
                             foundItem: "${singlePost.itemName}",
                             itemDescription: "${singlePost.description}",
                             imagePath: 'assets/images/passport.jpg',
