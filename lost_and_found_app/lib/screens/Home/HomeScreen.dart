@@ -7,6 +7,8 @@ import 'package:lost_and_found_app/screens/starting%20screens/getStarted_screen.
 import 'package:lost_and_found_app/widgets/long_button.dart';
 
 import '../../models/feed_model.dart';
+import '../../models/post_model.dart';
+import '../../remote_data_source/firestore_helper.dart';
 import '../../widgets/feedWidget.dart';
 import '../default_feeds.dart';
 
@@ -23,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true; // Track the loading state
   String _errorMessage = ''; // Track any error message
   List<FeedModel> _feeds = [];
-  // List to store feeds
 
   @override
   void initState() {
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CreatePostScreen(username: _username),
+        builder: (context) => CreatePostPage(),
       ),
     );
   }
@@ -102,88 +103,103 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       // Display the HomeScreen with the fetched username and feeds
       return Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, top: 50, right: 20),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Welcome $_username",
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Welcome $_username",
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xff7e3bc2),
+                        width: 2,
                       ),
                     ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color(0xff7e3bc2),
-                          width: 2,
-                        ),
-                      ),
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundImage:
-                            AssetImage('assets/images/profile.jpg'),
-                        backgroundColor: Colors.transparent,
-                      ),
+                    child: const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/images/profile.jpg'),
+                      backgroundColor: Colors.transparent,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                Row(
-                  children: [
-                    OutlinedButton.icon(
-                      onPressed: () {
-                        _handleCreatePost(context);
-                      },
-                      icon: const Icon(Icons.add),
-                      label: const Text("Create Post"),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        primary: const Color(0xff7e3bc2),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      _handleCreatePost(context);
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text("Create Post"),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.all(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
+                      primary: const Color(0xff7e3bc2),
                     ),
-                    const SizedBox(width: 20),
-                    const Text(
-                      "Create a Post about a missing\nobject you Found on 'Found it'",
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 20),
-                // Display the feeds
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _feeds.length,
-                  itemBuilder: (context, index) {
-                    FeedModel feed = _feeds[index];
-                    return FeedWidget(
-                      username: _username,
-                      foundItem: feed.itemName,
-                      itemDescription: feed.description,
-                      imagePath: feed.imageUrl,
-                      dateTime: feed.date,
-                      location: feed.location,
+                  ),
+                  const SizedBox(width: 20),
+                  const Text(
+                    "Create a Post about a missing\nobject you Found on 'Found it'",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: StreamBuilder<List<PostModel>>(
+                  stream: FirestoreHelper.read(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("Some error occurred"),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      final postData = snapshot.data;
+                      return ListView.builder(
+                        itemCount: postData!.length,
+                        itemBuilder: (context, index) {
+                          final singlePost = postData[index];
+                          return FeedWidget(
+                            username: _username,
+                            foundItem: "${singlePost.itemName}",
+                            itemDescription: "${singlePost.description}",
+                            imagePath: 'assets/images/passport.jpg',
+                            dateTime: "18th June 2023",
+                            location: "${singlePost.location}",
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
                   },
                 ),
-
-                const SizedBox(height: 20),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       );

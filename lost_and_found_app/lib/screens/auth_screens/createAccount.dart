@@ -128,24 +128,24 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _handleCreateAccount,
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      backgroundColor: Color(
+                      backgroundColor: const Color(
                           0xff7e3bc2) // Customize the button's background color
                       ),
                   child: _isLoading
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           color: Color(0xff7e3bc2),
                           strokeWidth: 5,
                         )
-                      : Text(
+                      : const Text(
                           'Create Account',
                           style: TextStyle(
                             fontSize: 18.0,

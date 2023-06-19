@@ -8,6 +8,8 @@ import 'package:lost_and_found_app/widgets/customTextEntry.dart';
 import 'package:lost_and_found_app/widgets/long_button.dart';
 import 'package:lost_and_found_app/widgets/passwordEntry.dart';
 
+import '../bottom_nav_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -171,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
           context,
           MaterialPageRoute(
             builder: (BuildContext context) =>
-                HomeScreen(), // Replace 'NextPage' with your actual next page widget
+                BottomNavBarScreen(), // Replace 'NextPage' with your actual next page widget
           ),
         );
       } else {
