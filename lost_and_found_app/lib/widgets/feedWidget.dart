@@ -59,18 +59,22 @@ class _FeedWidgetState extends State<FeedWidget> {
                   ],
                 ),
               ),
-              const SizedBox(width: 130),
-              OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.chat),
-                label: const Text("Chat Now"),
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+              Row(
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.chat),
+                    label: const Text("Chat Now"),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.all(6),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      primary: const Color(0xff7e3bc2),
+                    ),
                   ),
-                  primary: const Color(0xff7e3bc2),
-                ),
+                  const SizedBox(width: 5),
+                ],
               ),
             ],
           ),

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:lost_and_found_app/remote_data_source/firestore_helper.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../models/post_model.dart';
 import '../widgets/long_button.dart';
 
@@ -17,6 +20,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
   TextEditingController itemNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
+  File? _image;
 
   @override
   void dispose() {
@@ -50,6 +55,36 @@ class _CreatePostPageState extends State<CreatePostPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
         child: Column(
           children: [
+            GestureDetector(
+              onTap: () async {
+                ImagePicker imagePicker = ImagePicker();
+                XFile? file =
+                    await imagePicker.pickImage(source: ImageSource.gallery);
+                //print('${file?.path}');
+
+                //Upload to Firebase storage
+
+                // Get a reference to store root
+              },
+              child: Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: _image != null
+                    ? Image.file(
+                        _image!,
+                        fit: BoxFit.cover,
+                      )
+                    : const Icon(
+                        Icons.add_a_photo,
+                        size: 50,
+                      ),
+              ),
+            ),
+            const SizedBox(height: 20),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -59,10 +94,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   color: Colors.grey,
                 ),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: TextField(
                 controller: itemNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Enter Item name",
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
